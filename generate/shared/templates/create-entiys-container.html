@@ -1,0 +1,9 @@
+{{#each data}}
+import { {{name}} } from '{{path}}';
+{{/each}}
+
+export const Entity{{nameSchema}} = [
+{{#each data}}
+ {{name}},
+{{/each}}
+]

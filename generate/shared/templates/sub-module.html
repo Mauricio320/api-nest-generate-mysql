@@ -1,0 +1,13 @@
+import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common'
+import { DatabaseModule } from '../database/database.module'
+import { {{nameModule}}Controller } from './{{from}}.controller'
+import { {{nameModule}}Service } from './{{from}}.service'
+
+@Module({
+  imports: [DatabaseModule],
+  controllers: [{{nameModule}}Controller],
+  providers: [{{nameModule}}Service]
+})
+export class {{nameModule}}Module {}
+
+
