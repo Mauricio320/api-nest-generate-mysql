@@ -32,9 +32,34 @@ export class OnDatabase {
       asJson: false,
       output: `generate/output/schema.js`,
     }).then((res: any) => {
-      this.configDateBase = res;
+      this.configDateBase = this.createRelationsHasMany(res);
       this.onCreateContend();
     });
+  }
+
+  private createRelationsHasMany(res: any) {
+    const columns = res.columns;
+    for (const table in columns) {
+      for (const key in columns[table]) {
+        columns[table][key].referencesHas = [];
+      }
+    }
+
+    for (const table in columns) {
+      for (const key in columns[table]) {
+        const relations: any[] = columns[table][key].referencesTo;
+        if (relations.length > 0) {
+          for (const relation of relations) {
+            columns[relation.referencedTable].id.referencesHas.push({
+              ...relation,
+              referencedTable: table
+            });
+          }
+        }
+      }
+    }
+
+    return res;
   }
 
   onCreateContend() {

@@ -36,8 +36,6 @@ export class EmtitysContainer {
 
     const path = `${this.path}/app.entities.ts`;
 
-    console.log(path, '<------ path');
-
     fs.writeFile(path, entity, (err) => {
       if (err) {
         console.log(err);

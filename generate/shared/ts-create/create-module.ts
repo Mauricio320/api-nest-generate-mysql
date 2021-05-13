@@ -18,8 +18,6 @@ export class Module {
 
     const data = { nameModule: nameSchema, modulos: namesTables };
     const content = template(data);
-    console.log(data);
-
     const folder = `${this.dir}${this.shFn.replace(nameSchema)}.module.ts`;
 
     fs.writeFile(folder, content, (err) => {

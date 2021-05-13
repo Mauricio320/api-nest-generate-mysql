@@ -74,6 +74,28 @@ export class Entity {
 
   getRelations(tableName: string, table: any) {
     const belongsTo = [];
+    const hasMany = [];
+
+    /**
+     * @hasMany
+     * 1 to m
+     */
+    for (const key in table) {
+      if (table[key].referencesHas.length > 0) {
+        const relations = table[key].referencesHas;
+
+        for (const relation of relations) {
+          const name = this.shFn.namePrimaryMayus(
+            this.shFn.singularword(relation.referencedTable),
+          );
+          hasMany.push({
+            name,
+            foreignKey: relation.column,
+            tableName: relation.referencedTable,
+          });
+        }
+      }
+    }
 
     /**
      * @belongsTo
@@ -97,7 +119,7 @@ export class Entity {
       }
     }
 
-    const relations = { belongsTo };
+    const relations = { hasMany, belongsTo };
     const imports = this.getImportsForEntity(relations);
 
     return { ...relations, imports };
